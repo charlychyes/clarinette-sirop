@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarinette Sirop | Saveurs de Mayotte</title>
+    <style>
+        /* Styles Généraux */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; line-height: 1.6; color: #333; background-color: #f9f9f9;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center;
+        }
+
+        .container { width: 90%; max-width: 1100px; margin: auto; padding: 20px 0; }
+
+        /* Section Saveurs */
+        .flavors {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;
+        }
+
+        .flavor-card {
+            background: white; padding: 20px; border-radius: 15px; text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;
+        }
+
+        .flavor-img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
+
+        .flavor-card:hover { transform: translateY(-5px); }
+        .bissap { border-top: 8px solid #880e4f; }
+        .ananas { border-top: 8px solid #fdd835; }
+        .citron { border-top: 8px solid #cddc39; }
+        .menthe { border-top: 8px solid #4caf50; }
+
+        /* Boutons */
+        .btn-add {
+            background: #ff5722; color: white; border: none; padding: 10px 15px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px;
+        }
+
+        /* Panier Flottant */
+        #cart-status {
+            position: fixed; bottom: 20px; right: 20px; background: #333; color: white;
+            padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000; display: flex; align-items: center; gap: 10px;
+        }
+
+        #cart-modal {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 1001; width: 90%; max-width: 400px;
+        }
+
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        /* Contact */
+        .contact { background: #fff; padding: 40px 20px; margin: 40px 0; border-radius: 10px; text-align: center; }
+        .btn { display: inline-block; background: #ff5722; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; margin: 10px; font-weight: bold; }
+
+        footer { background: #333; color: white; text-align: center; padding: 20px 0; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🥤 Clarinette Sirop Mayotte</h1>
+        <p>Le rafraîchissement authentique de Passamainti</p>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center;">Choisissez vos Saveurs</h2>
+        
+        <div class="flavors">
+            <div class="flavor-card bissap">
+                <img src="https://drive.google.com/uc?export=view&id=1nkFdO_cxOscqjHWJKkhyiEXJ-4oRpyCI" class="flavor-img">
+                <h3>Bissap</h3>
+                <p>5,00 EURO</p>
+                <button class="btn-add" onclick="addToCart('Bissap')">Ajouter au panier</button>
+            </div>
+
+            <div class="flavor-card ananas">
+                <img src="https://drive.google.com/uc?export=view&id=187oOqobst-6BULM3_c7YICj6I1wrEyPT" class="flavor-img">
+                <h3>Ananas</h3>
+                <p>5,00 EURO</p>
+                <button class="btn-add" onclick="addToCart('Ananas')">Ajouter au panier</button>
+            </div>
+
+            <div class="flavor-card citron">
+                <img src="https://drive.google.com/uc?export=view&id=1XbjSL_QS1E5IDcXe6CFlyZIvG_FbuEPH" class="flavor-img">
+                <h3>Citron</h3>
+                <p>5,00 EURO</p>
+                <button class="btn-add" onclick="addToCart('Citron')">Ajouter au panier</button>
+            </div>
+
+            <div class="flavor-card menthe">
+                <img src="https://drive.google.com/uc?export=view&id=16_HMcd--oFY3IJ5aDezRK3YPGGkyCSYj" class="flavor-img">
+                <h3>Menthe</h3>
+                <p>5,00 EURO</p>
+                <button class="btn-add" onclick="addToCart('Menthe')">Ajouter au panier</button>
+            </div>
+        </div>
+
+        <section class="contact">
+            <h2>Besoin d'aide ?</h2>
+            <a href="tel:+262639652738" class="btn">📞 +262 639 652 738</a>
+        </section>
+    </div>
+
+    <div id="cart-status" onclick="toggleCart()">
+        🛒 Panier (<span id="cart-count">0</span>)
+    </div>
+
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    <div id="cart-modal">
+        <h3>Votre Commande</h3>
+        <div id="cart-items"></div>
+        <hr>
+        <button class="btn" style="width:100%; border:none;" onclick="sendOrder()">Commander via WhatsApp</button>
+        <button onclick="toggleCart()" style="background:none; border:none; color:gray; cursor:pointer; margin-top:10px;">Fermer</button>
+    </div>
+
+    <footer><p>&copy; 2026 Clarinette Sirop - Passamainti, Mayotte</p></footer>
+
+    <script>
+        let cart = {};
+
+        function addToCart(flavor) {
+            cart[flavor] = (cart[flavor] || 0) + 1;
+            updateCartUI();
+            alert(flavor + " ajouté au panier !");
+        }
+
+        function updateCartUI() {
+            let count = 0;
+            let itemsHtml = "";
+            for (let flavor in cart) {
+                count += cart[flavor];
+                itemsHtml += `<div class="cart-item"><span>${flavor}</span> <b>x${cart[flavor]}</b></div>`;
+            }
+            document.getElementById('cart-count').innerText = count;
+            document.getElementById('cart-items').innerHTML = itemsHtml || "Votre panier est vide.";
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            const overlay = document.getElementById('overlay');
+            const isVisible = modal.style.display === 'block';
+            modal.style.display = isVisible ? 'none' : 'block';
+            overlay.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function sendOrder() {
+            if (Object.keys(cart).length === 0) return alert("Votre panier est vide !");
+            
+            let message = "Bonjour Clarinette Sirop ! Je souhaite commander :\n";
+            for (let flavor in cart) {
+                message += `- ${flavor} (x${cart[flavor]})\n`;
+            }
+            
+            // Lien WhatsApp vers votre numéro
+            const whatsappUrl = `https://wa.me/262639652738?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
